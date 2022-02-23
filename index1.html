@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Handlebars Frontend Review #1</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+</head>
+<body>
+    <div id="output"></div>
+    <script id="another-template" type="text/x-handlebars-template">
+        <div class="entry">
+            <h1>{{title}}</h1>
+            <div class="body">
+                {{#noop}}{{body}}{{/noop}}
+            </div>
+        </div>
+    </script>
+
+    
+    <script>
+        const templateInfo = document.getElementById("another-template").innerHTML;
+        const template = Handlebars.compile(templateInfo);
+
+        Handlebars.registerHelper("noop", function(options) { //This is a block helper, I guess.
+            console.log('this in noop is: ');
+            console.log(this);
+            return options.fn(this);
+        });
+
+        const templateData = template({});
+
+        document.getElementById("output").innerHTML += templateData;
+    </script>
+    
+</body>
+</html>

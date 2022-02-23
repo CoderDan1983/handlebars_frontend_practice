@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Handlebars Frontend Review #0</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+</head>
+<body>
+    <div id="handlebar-output"></div>
+
+    <script id="handlebar-template" type="text/x-handlebars-template">
+        <h1>{{title}}</h1>
+        <!-- Daryl's are destined to live their lives in peril!<br> -->
+        {{#each characters}}
+            <div class="container0">
+                <div class="item0">Name: {{this.name}}</div>
+                <div  class="item0">Class: {{this.class}}</div>
+                <div  class="item0">Race: {{this.race}}</div>
+                <div  class="item0">Element: {{this.element}}</div>
+                <div  class="item0">Description: {{this.description}}</div>
+            </div>
+        {{/each}}
+
+        {{{htm_l}}}
+
+        <ul>
+            {{future 'juan way' 'ore anne oh there'}}
+            {{present}}
+        </ul>
+
+        {{past rang="dippity"}}
+
+        {{areaVSvolume 5}}
+
+        {{infinateX 'flooped' 'florped' 'flopped' 'flapped'}}
+    </script>
+    
+    <script type="text/javascript">
+        Handlebars.registerHelper('future', function(something, anotherThing){
+            let first = Handlebars.Utils.escapeExpression(something);
+            let second = Handlebars.Utils.escapeExpression(anotherThing);
+
+            return new Handlebars.SafeString("<li>" + first + ' kidney beans ' + second + "</li>");
+        });
+
+        Handlebars.registerHelper('present', function(){
+            return new Handlebars.SafeString("<li><i>Delivering SafeString presents to children all over the world.  ^_^</i></li>")
+        });
+
+        Handlebars.registerHelper('past', function(boptions){
+            console.log('boptions: ')
+            console.log(boptions);
+            console.log('data: ')
+            console.log(boptions.data);
+            console.log('hash: ')
+            console.log(boptions.hash);
+            return new Handlebars.SafeString(`<p>Aisle Fined Ate ${boptions.data.root.title}!</p>
+            <p>Rang is ${boptions.hash.rang}</p>`);
+        });
+        Handlebars.registerHelper('areaVSvolume', function(num){
+            let nummy = parseInt(Handlebars.Utils.escapeExpression(num), 10);
+            //let second = parseInt(Handlebars.Utils.escapeExpression(num1), 10);
+
+            if((Number.isNaN(nummy) === false)){
+                let volume = nummy * nummy * nummy;
+                let surfaceArea = nummy * nummy * 6;
+                
+                return new Handlebars.SafeString(`<div class="message">The volume is: ${volume}.  The surfaceArea is: ${surfaceArea} when the length is: ${nummy}.</div>`);
+            }
+            else{
+                return new Handlebars.SafeString("<div class='alert'> entry must be a number!</div>")
+            }
+        });
+
+        Handlebars.registerHelper('infinateX', function( ...args){ //pass in as many arguments as you want!
+            let returnString="";
+            for(let a=0; a < args.length; a++){
+                returnString += `<p>And then we ${args[a]}</p>`
+            }
+
+            return new Handlebars.SafeString(returnString);
+        });
+
+        const infoArray = [
+            { class: "warrior", race: "elf", element: "thunder and lightning", description: "very very frightening", name: "O. Galileo"},
+            { class: "blogger", race: "troll", element: "chaos", description: "+50% attack on web", name: "Anon247"},
+            { class: "palidan", race: "human", element: "darkness", description: "The holiest.  Just ask them", name: "SJW"},
+            { class: "mage", race: "dwarf", element: "earth", description: "a down to earth fellow", name: "Diggle Me Dirt"},
+        ]
+        const template = document.getElementById("handlebar-template").innerHTML;
+        const compiled = Handlebars.compile(template);
+        const readyToAdd = compiled({
+            characters: infoArray,
+            title: "Warriors of Mediocre Earth",
+            htm_l: "<img src='images/palmParadise.jpg' height=300 width=450>"
+        });
+        document.getElementById("handlebar-output").innerHTML += readyToAdd;
+    </script>
+
+    <script src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+.container0 {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+
+    grid-auto-flow: column;
+    box-shadow: 2px 4px gray;
+    border-radius: 8px;
+
+    grid-gap: 40px;
+    background-color: #0000ff44;;
+
+    margin: 6px;
+    padding: 4px;
+}
+
+.item0 {
+    background-color: #0000ff88;
+    border-radius: 6px;
+}
